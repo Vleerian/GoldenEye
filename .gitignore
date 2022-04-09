@@ -1,0 +1,7 @@
+.vscode/
+*.csv
+*.xml
+[Bb]in/
+[Oo]bj/
+
+[Dd]ata/
