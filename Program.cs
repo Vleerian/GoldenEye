@@ -222,6 +222,21 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
             CSVDump("ROEndos.csv", Nations.Where(N => N.EndorsingRO));
             // Create a group of all the Non-WA nations
             CSVDump("NonWA.csv", Nations.Where(N=>!N.IsWA));
+
+            if(settings.DefenderPoints != null)
+            {
+                // Set the points up into an array
+                string[] DefenderPoints = new string[] { settings.DefenderPoints.Trim() };
+                if(settings.DefenderPoints.Contains(","))
+                    DefenderPoints = settings.DefenderPoints.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                // Sanitize the point names
+                DefenderPoints = DefenderPoints.Select(P=>CleanName(P)).ToArray();
+                var Points = Nations.Where(N=>DefenderPoints.Contains(CleanName(N.name)));
+                // Defender point nations
+                CSVDump("DefenderPoints.csv", Points);
+                // Nations endorsing the specified defender point nations
+                CSVDump("DefenderEndos.csv", Nations.Where(N=>Points.Any(P=>P.Endorsements.Contains(CleanName(N.name)))));
+            }
         }
 
         AnsiConsole.MarkupLine(Output.ToString());
@@ -340,6 +355,10 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
         [Description("Scan all of a region's nations")]
         [DefaultValue(false)]
         public bool FullReport { get; init; }
+
+        [CommandOption("--defender-points")]
+        [Description("Comma separated list of defender point nations")]
+        public string? DefenderPoints { get; init; }
     }
 }
 
