@@ -17,21 +17,18 @@ return app.Run(args);
 internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
 {
     const int PollSpeed = 750;
-    const string VersionNumber = "2.0";
+    const string VersionNumber = "2.1";
 
     HttpClient client = new();
 
     const string Check = "[green]✓[/]";
     const string Cross = "[red]x[/]";
     const string Arrow = "→";
-    
-    public GoldenEye()
-    {
-        client.DefaultRequestHeaders.Add("User-Agent", $"GoldenEye/{VersionNumber} (By 20XX, Atagait@hotmail.com)");
-    }
 
     public async override Task<int> ExecuteAsync([NotNull] CommandContext context, [NotNull] Settings settings)
     {
+        client.DefaultRequestHeaders.Add("User-Agent", $"GoldenEye/{VersionNumber} User/{settings.MainNation} (By 20XX, Atagait@hotmail.com)");
+
         string target = CleanName(settings.Region!);
 
         if(!Directory.Exists("./data"))
@@ -333,12 +330,16 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
 
     public sealed class Settings : CommandSettings
     {
+        [Description("Your nation name for identifying the user to NSAdmin")]
+        [CommandArgument(0, "[MainNation]")]
+        public string? MainNation { get; init; }
+
         [Description("Region to Scan")]
-        [CommandArgument(0, "[region]")]
+        [CommandArgument(1, "[region]")]
         public string? Region { get; init; }
 
         [Description("Region Data Dump XML file to use")]
-        [CommandArgument(1, "[dataDump]")]
+        [CommandArgument(2, "[dataDump]")]
         public string? DataDump { get; init; }
 
         [CommandOption("--cds")]
