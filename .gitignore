@@ -3,5 +3,5 @@
 *.xml
 [Bb]in/
 [Oo]bj/
-
 [Dd]ata/
+[Bb]uilds/

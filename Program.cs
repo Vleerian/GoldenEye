@@ -104,9 +104,9 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
             Output.AppendLine($"Embassies:{Region_Current.Embassies.Count()}");
         
         // If a CDS scan was requested, fetch the CDS and compare the embassies to it
-        Logger.Processing("Performing CDS scan");
         if(settings.CDS_Scan)
         {
+            Logger.Processing("Performing CDS scan");
             // The filename used to store the CDS XML
             string CDS_Filename = "./data/CDS_"+DateTime.Now.ToString("dd.MM.yyyy")+".xml";
             string CDS_XML = "";
@@ -184,9 +184,10 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
         }
 
         // Get the rest of the nations
-        Logger.Processing("Generating full report");
         if(settings.FullReport)
         {
+            Logger.Processing("Generating full report");
+
             // This will be the group of Delegates + RO
             CSVDump("DelsRO.csv", Nations);
             Logger.Info("Delegates and ROs report done.");
@@ -319,11 +320,11 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
     {
         [Description("Region to Scan")]
         [CommandArgument(0, "[region]")]
-        public string Region { get; init; }
+        public string? Region { get; init; }
 
         [Description("Region Data Dump XML file to use")]
         [CommandArgument(1, "[dataDump]")]
-        public string DataDump { get; init; }
+        public string? DataDump { get; init; }
 
         [CommandOption("--cds")]
         [Description("Scan the region's embassies using Civil Defense Siren")]
