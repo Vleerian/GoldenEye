@@ -38,7 +38,7 @@ Will generate additional CSV files for the following groups
 
 # Running GoldenEye
 
-It is suggested you run one of the [url=https://github.com/Vleerian/GoldenEye/latest]Latest Releases[/url]
+It is suggested you run one of the [Latest Releases](https://github.com/Vleerian/GoldenEye/latest)
 
 To run from source you will need the DotNet6 SDK, and run the build command
 `dotnet build -C Release`
