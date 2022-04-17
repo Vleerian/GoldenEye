@@ -1,4 +1,5 @@
 # GoldenEye
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/vleerian/goldeneye/multiplatPublish/main?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/vleerian/goldeneye?style=for-the-badge) ![GitHub issues](https://img.shields.io/github/issues/vleerian/goldeneye?style=for-the-badge)
 Vleerian's NS Region diagnostics tool
 
 # Usage
