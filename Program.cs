@@ -176,6 +176,8 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
         foreach(var Officer in Region_Current.Officers.Where(O=>O.Nation?.ToLower() != "cte"))
         {
             var regionOfficer = await GetNation(Officer.Nation);
+            if(regionOfficer == default)
+                continue;
             Nations.Add(regionOfficer);
             Output.AppendLine(await GenNationReport(regionOfficer, Vis, Invis, Officer.OfficerAuth));
         }
