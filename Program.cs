@@ -180,6 +180,8 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
             var regionOfficer = await GetNation(Officer.Nation);
             if(regionOfficer == default)
                 continue;
+            if(regionDelegate.Endorsements.Contains(Officer.Nation))
+                regionOfficer.EndorsingDel = true;
             Nations.Add(regionOfficer);
             Output.AppendLine(await GenNationReport(regionOfficer, Vis, Invis, Officer.OfficerAuth));
         }
@@ -201,6 +203,8 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
                     .GroupBy(x => x) // Duplicate removal step one
                     .Select(x=>x.First()) // duplicate removal step two
                     .ToArray(); // Convert it to an array
+                if(RO_Endos.Contains(CleanName(regionDelegate.name)))
+                    regionDelegate.EndorsingRO = true;
 
                 // Select only nations that haven't already been scanned
                 string[] scanned = Nations.Select(N=>CleanName(N.name)).ToArray();
