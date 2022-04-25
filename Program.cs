@@ -12,6 +12,8 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 
 var app = new CommandApp<GoldenEye>();
+if(args.Length == 0)
+    args = new string[] { "--help " };
 return app.Run(args);
 
 internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
