@@ -222,11 +222,14 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
             }
 
             // Nations endorsing the delegate
-            CSVDump("DelEndos.csv", Nations.Where(N => N.EndorsingDel));
-            // Create a group of nations endorsing the ROs
-            CSVDump("ROEndos.csv", Nations.Where(N => N.EndorsingRO));
-            // Create a group of all the Non-WA nations
-            CSVDump("NonWA.csv", Nations.Where(N=>!N.IsWA));
+            GenReport("DelEndos.csv", Nations, N => N.EndorsingDel);
+            // Nations endorsing the ROs
+            GenReport("ROEndos.csv", Nations, N => N.EndorsingRO);
+            // WA-Nations not endorsing the delegate
+            GenReport("NonEndos.csv", Nations, N => (N.IsWA && !N.EndorsingDel));
+            // Non-WA nations
+            GenReport("NonWA.csv", Nations, N => !N.IsWA);
+
 
             if(settings.DefenderPoints != null)
             {
@@ -250,6 +253,11 @@ internal sealed class GoldenEye : AsyncCommand<GoldenEye.Settings>
     }
 
     public static string CleanName(string name) => name.ToLower().Replace(' ', '_');
+
+    static async void GenReport(string FileName, IEnumerable<NationAPI> Nations, Func<NationAPI, bool> Predicate)
+    {
+        CSVDump(FileName, Nations.Where(Predicate));
+    }
 
     static async void CSVDump(string Filename, IEnumerable<NationAPI> nations)
     {
